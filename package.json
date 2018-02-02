@@ -1,0 +1,14 @@
+{
+  "name": "awsp",
+  "version": "0.0.1",
+  "description": "Switch AWS Profiles easily",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johnny Opao",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^5.0.1"
+  }
+}
