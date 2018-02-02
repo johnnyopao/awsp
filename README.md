@@ -5,4 +5,10 @@ Setup and configuration is pretty hacky right now. Need to find a more elegant w
 Current setup:
 1. clone awsp proj
 1. npm install
-1. add a bash function to call awsp
+1. add a bash function to shell config to call awsp
+
+```sh
+awsp () {
+  source $HOME/dotfiles/awsp/run.sh
+}
+```
