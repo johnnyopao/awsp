@@ -41,6 +41,14 @@ fs.readFile(`${homeDir}/.aws/config`, 'utf8', function(err, data) {
 
     const matches = data.match(profileRegex);
 
+    if (!matches) {
+      console.log('No profiles found.');
+      console.log('Refer to this guide for help on setting up a new AWS profile:');
+      console.log('https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html');
+
+      return;
+    }
+
     const profiles = matches.map((match) => {
       return match.replace(bracketsRemovalRegx, '');
     });
