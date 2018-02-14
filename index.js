@@ -39,7 +39,7 @@ const promptProfileChoice = (data) => {
   return inquirer.prompt(profileChoice);
 }
 
-const readConfig = () => {
+const readAwsConfig = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(`${homeDir}/.aws/config`, 'utf8', (err, data) => {
       if (err) {
@@ -66,9 +66,10 @@ const writeToConfig = (answers) => {
   });
 };
 
-readConfig()
+readAwsConfig()
   .then(promptProfileChoice)
   .then(writeToConfig)
   .catch(error => {
     console.log('Error:', error);
+    process.exit(1);
   });
