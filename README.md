@@ -2,6 +2,8 @@
 
 Easily switch between AWS Profiles
 
+<img src="demo.gif" width="600">
+
 ## Setup
 
 ```sh
