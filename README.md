@@ -2,7 +2,18 @@
 
 Easily switch between AWS Profiles
 
-<img src="demo.gif" width="600">
+<img src="demo.gif" width="500">
+
+## Prereqs
+
+Have profiles setup using the aws cli. Do not setup a default profile (see below for why)
+
+```sh
+aws configure --profile PROFILE_NAME
+```
+
+Refer to this doc for more information
+https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
 ## Setup
 
@@ -32,7 +43,7 @@ All profiles need to be defined in `~/.aws/config` with the prefix `[profile ...
 ```
 
 ### Show your AWS Profile in your shell prompt
-For better visibility into what your shell is set to it's helpful to configure your prompt to show what value `AWS_PROFILE` your shell is set to.
+For better visibility into what your shell is set to it's helpful to configure your prompt to show the value of the env variable `AWS_PROFILE`.
 
 <img src="screenshot.png" width="300">
 
