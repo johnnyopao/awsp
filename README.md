@@ -30,7 +30,9 @@ All profiles need to be defined in `~/.aws/config` with the prefix `[profile ...
 ```
 
 ### Show your AWS Profile in your shell prompt
-For visibility it's helpful to congifure your prompt to show what value `AWS_PROFILE` your shell is set to.
+For better visibility into what your shell is set to it's helpful to configure your prompt to show what value `AWS_PROFILE` your shell is set to.
+
+![](screenshot.png)
 
 Here's a sample of my zsh prompt config using oh-my-zsh themes
 
