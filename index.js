@@ -10,7 +10,21 @@ const profileRegex = /\[profile .*]/g;
 const bracketsRemovalRegx = /(\[profile )|(\])/g;
 const clearProfileChoice = '*clear*';
 
-const promptProfileChoice = (profiles) => {
+const promptProfileChoice = (data) => {
+  const matches = data.match(profileRegex);
+
+  if (!matches) {
+    console.log('No profiles found.');
+    console.log('Refer to this guide for help on setting up a new AWS profile:');
+    console.log('https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html');
+
+    return;
+  }
+
+  const profiles = matches.map((match) => {
+    return match.replace(bracketsRemovalRegx, '');
+  });
+
   profiles.push(clearProfileChoice);
 
   const profileChoice = [
@@ -22,40 +36,39 @@ const promptProfileChoice = (profiles) => {
     }
   ];
 
-  inquirer.prompt(profileChoice).then(answers => {
-    const profileChoice =
-      answers.profile === clearProfileChoice ? '' : answers.profile;
+  return inquirer.prompt(profileChoice);
+}
 
-    fs.writeFile(`${homeDir}/.awsps`, profileChoice, { flag: 'w' }, function (err) {
+const readConfig = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(`${homeDir}/.aws/config`, 'utf8', (err, data) => {
       if (err) {
-        console.log('Error:', err);
+        reject(err);
+      } else {
+        resolve(data);
       }
     });
   });
-}
+};
 
-fs.readFile(`${homeDir}/.aws/config`, 'utf8', function(err, data) {
-    if (err) {
-      console.log('Error:', err);
-    }
+const writeToConfig = (answers) => {
+  const profileChoice =
+        answers.profile === clearProfileChoice ? '' : answers.profile;
 
-    const matches = data.match(profileRegex);
-
-    if (!matches) {
-      console.log('No profiles found.');
-      console.log('Refer to this guide for help on setting up a new AWS profile:');
-      console.log('https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html');
-
-      return;
-    }
-
-    const profiles = matches.map((match) => {
-      return match.replace(bracketsRemovalRegx, '');
+  return new Promise((resolve, reject) => {
+    fs.writeFile(`${homeDir}/.awsp`, profileChoice, { flag: 'w' }, function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
     });
+  });
+};
 
-    promptProfileChoice(profiles);
-});
-
-
-
-
+readConfig()
+  .then(promptProfileChoice)
+  .then(writeToConfig)
+  .catch(error => {
+    console.log('Error:', error);
+  });
