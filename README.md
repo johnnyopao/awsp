@@ -5,12 +5,13 @@ Easily switch between AWS Profiles
 <img src="demo.gif" width="500">
 
 ## Prereqs
-
-Have profiles setup using the aws cli. Do not setup a default profile (see below for why)
+Setup your profiles using the aws cli
 
 ```sh
 aws configure --profile PROFILE_NAME
 ```
+
+You can also leave out the `--profile PROFILE_NAME` param to set your `default` credentials
 
 Refer to this doc for more information
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
@@ -33,15 +34,6 @@ awsp
 
 ## Recommended Practices
 
-### Default Profiles
-Default profiles are not currently supported. This was intentionally done so the user explicitly selects a profile in each shell.
-
-All profiles need to be defined in `~/.aws/config` with the prefix `[profile ...]`
-
-```
-[profile sandbox]
-```
-
 ### Show your AWS Profile in your shell prompt
 For better visibility into what your shell is set to it's helpful to configure your prompt to show the value of the env variable `AWS_PROFILE`.
 
@@ -51,12 +43,9 @@ Here's a sample of my zsh prompt config using oh-my-zsh themes
 
 ```sh
 function aws_prof {
-  local profile="${AWS_PROFILE}"
+  local profile="${AWS_PROFILE:=default}"
 
-  if [[ -z "${profile}" ]]
-  then echo ""
-  else echo "%{$fg_bold[blue]%}aws:(%{$fg[yellow]%}${profile}%{$fg_bold[blue]%})%{$reset_color%} "
-  fi
+  echo "%{$fg_bold[blue]%}aws:(%{$fg[yellow]%}${profile}%{$fg_bold[blue]%})%{$reset_color%} "
 }
 ```
 
