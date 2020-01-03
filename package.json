@@ -1,6 +1,6 @@
 {
   "name": "awsp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Switch AWS Profiles easily",
   "main": "index.js",
   "homepage": "https://github.com/johnnyopao/awsp",
