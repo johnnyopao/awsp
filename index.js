@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 
 console.log('AWS Profile Switcher');
 
@@ -27,17 +28,22 @@ const promptProfileChoice = (data) => {
 
   profiles.push(defaultProfileChoice);
 
-  const profileChoice = [
-    {
-      type: 'list',
-      name: 'profile',
-      message: 'Choose a profile',
-      choices: profiles,
-      default: process.env.AWS_PROFILE || defaultProfileChoice
-    }
-  ];
+  if (process.argv[2]) {
+    console.log(`${chalk.bold('Choose a profile')} ${chalk.cyan(process.argv[2])}`);
+    return { 'profile': process.argv[2] };
+  } else {
+    const profileChoice = [
+      {
+        type: 'list',
+        name: 'profile',
+        message: 'Choose a profile',
+        choices: profiles,
+        default: process.env.AWS_PROFILE || defaultProfileChoice
+      }
+    ];
 
-  return inquirer.prompt(profileChoice);
+    return inquirer.prompt(profileChoice);
+  }
 }
 
 const readAwsProfiles = () => {
